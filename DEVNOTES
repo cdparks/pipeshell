@@ -1,0 +1,74 @@
+OVERVIEW:
+	The pipe shell, or psh, is a simplified shell for UNIX-like systems.
+	It is implemented in C89, using flex for the scanner and a handwritten
+	parser.
+
+SCANNER:
+	The scanner is implemented in flex, and, as such, follows typical
+	conventions. The main scanning function is int yylex(void), which sets
+	char *tokentext = yytext, and returns an enum representing token type.
+	The use of global variables is unfortunate, but this is fairly standard
+	when using flex. Bison and yacc access the actual content of the token
+	similarly. Note that the tokentext is not a duplicated string. It is
+	the parser's responsibility to malloc/strdup (and free) a new string
+	if necessary. In a change from the var shell, the scanner reads an
+	entire line of input and then scans that line. This replaces the more
+	error-prone method of scanning single tokens from the command line.
+	The old method meant that on error, all tokens still on the command
+	line would need to be discarded, or else the shell would be blocked
+	into some error state. Now, when we hit an error, the extra tokens are
+	in memory, and are simply overwritten by the new line read in by the
+	GNU getline extension. See yy_scan_string in flex for more details.
+	
+PARSER:
+	The parser is (essentially) a recursive descent parser that examines
+	tokens one at a time to determine control flow. The current token is
+	always available in char *tokentext, but if a string must last longer
+	than the next call to yylex, it is duplicated using strdup. Errors are
+	handled where they arise. The only fatal error occurs if the hashtable
+	for shell variables cannot be allocated in initparser. Tecnically,
+	there are two parsers; pshparse parses the builtin commands (all of
+	which are faily simple), and cmdparse parses user commands.
+
+USER COMMANDS:
+	User commands are gathered into a structure called CmdGroup or command
+	group. Command groups looke like this:
+
+	CmdGroup:
+	|->filein = NULL/FILE *
+	|->fileout = NULL/FILE *
+	|->length = int
+	|->wait = True/False
+	|->tail----------------------------
+	|->head                            |
+	    |                              |
+   NULL<--CmdNode<--->CmdNode<--->...<--->CmdNode-->NULL
+	  |->cmd      |->cmd              |->cmd
+	  |->fullpath |->fullpath         |->fullpath
+	  |->args     |->args             |->args
+
+	The command group has two filehandles which can be set for redirecting
+	stdin and/or stdout, a length member, and a pointer to a doubly-linked-
+	list of command node or CmdNode objects. Each command node contains the
+	short name of the command, the full path to the command, and an Argv
+	null-terminated argument vector. The cmdparse function in cmdparse.h/c
+	builds a command group and the runcmdgroup function in cmdengine.h/c
+	runs each command, hooking up pipes and doing file redirection in
+	between.
+
+
+TESTING:
+	There are two small regression tests in Tests/ that test the 
+	varshell's output in the face of good and bad inputs. Run 'make test'
+	from varshell/, and, if the diff of success.out/success.base and 
+	error.out/error.base is nothing, all is well. Since, I switched to
+	actually using stderr for printing errors, error.base is not yet
+	updated.
+
+SEE ALSO:
+	Each source file has a preface detailing the essentials of that module.
+	See hashtable.h/c for information on the hashtable and argv.h/c for
+	information on the dynamic arrays used for passing arguments to 
+	commands. cmdgroup.h/c, cmdparse.h/c, and cmdengine.h/c are also 
+	interesting new additions.
+

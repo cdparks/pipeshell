@@ -1,0 +1,30 @@
+Files included in submission:
+
+pipeshell/
+	argv.c
+	argv.h
+	checkcmd.c
+	cmdengine.c
+	cmdengine.h
+	cmdgroup.c
+	cmdgroup.h
+	cmdparse.c
+	cmdparse.h
+	DEVNOTES		// Updated devnotes
+	DOCUMENTATION		// Updated documentation
+	hashtable.c
+	hashtable.h
+	Makefile
+	prolog
+	psh.c
+	pshlex.l
+	pshparse.c
+	pshparse.h
+	pshscript.txt		// Script session in psh
+	pshutils.c
+	pshutils.h
+	README			// This file
+	Tests/
+		success.base
+		success.in
+		success.out

@@ -1,0 +1,155 @@
+Script started on Mon 28 Feb 2011 08:10:43 PM EST
+coreopsis:~/CS470/pipeshell> make
+argv.c	cmdengine.c  cmdgroup.c  cmdparse.c  devnotes.txt	hashtable.c  infilez	makefile  psh.c     pshparse.c	pshscript.txt  pshutils.h  Tests
+argv.h	cmdengine.h  cmdgroup.h  cmdparse.h  documentation.txt	hashtable.h  lslen.txt	outfilez  pshlex.l  pshparse.h	pshutils.c     readme.txt
+
+coreopsis:~/CS470/pipeshell> make
+gcc -Wall -std=c89 -c pshutils.c
+flex -o pshlex.c --header-file=pshlex.h pshlex.l
+gcc -Wall -std=c89 -c pshlex.c
+gcc -Wall -std=c89 -c pshparse.c
+gcc -Wall -std=c89 -c cmdgroup.c
+gcc -Wall -std=c89 -c cmdparse.c
+gcc -Wall -std=c89 -c cmdengine.c	
+gcc -Wall -std=c89 -c hashtable.c
+gcc -Wall -std=c89 -c argv.c
+gcc -Wall -std=c89 psh.c pshutils.o pshparse.o pshlex.o cmdgroup.o cmdparse.o cmdengine.o hashtable.o argv.o -o psh
+
+coreopsis:~/CS470/pipeshell> ./psh
+
+[pipeshell] psh $ setvar $ShowParseOutput "1"
+
+[pipeshell] psh $ ls -laR | sort | wc > lslen.txt
+Token Type: word             Token: ls               Usage: command         
+Token Type: word             Token: -laR             Usage: arg 1           
+Token Type: pipe             Token: |                Usage: pipe            
+Token Type: word             Token: sort             Usage: command         
+Token Type: pipe             Token: |                Usage: pipe            
+Token Type: word             Token: wc               Usage: command         
+Token Type: redirect stdout  Token: >                Usage: redirect stdout 
+Token Type: word             Token: lslen.txt        Usage: filename        
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[pipeshell] psh $ cat lslen.txt
+Token Type: word             Token: cat              Usage: command         
+Token Type: word             Token: lslen.txt        Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+     51     374    2861
+
+[pipeshell] psh $ cd ../..
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: word             Token: ../..            Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[cdpark4] psh $ cd HTML
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: word             Token: HTML             Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+[HTML] psh $ pwd
+Token Type: word             Token: pwd              Usage: command         
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+/mounts/u-zon-d2/ugrad/cdpark4/HTML
+
+[HTML] psh $ setvar $HTML "/mounts/u-zon-d2/ugrad/cdpark4/HTML"
+Token Type: setvar           Token: setvar           Usage: setvar          
+Token Type: variable         Token: $HTML            Usage: variable_name   
+Token Type: string           Token: /mounts/u-zon... Usage: string          
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[HTML] psh $ echo $HTML
+Token Type: word             Token: echo             Usage: command         
+Token Type: word             Token: /mounts/u-zon... Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+/mounts/u-zon-d2/ugrad/cdpark4/HTML
+
+[HTML] psh $ cd ../CS471
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: word             Token: ../CS471         Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[CS471] psh $ ls
+Token Type: word             Token: ls               Usage: command         
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+checkurl.c  CS471Program1  endofmessage.c
+
+[CS471] psh $ cd CS471Program1
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: word             Token: CS471Program1    Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[CS471Program1] psh $ ./myserver 6219 $HTML &
+Token Type: word             Token: ./myserver       Usage: command         
+Token Type: word             Token: 6219             Usage: arg 1           
+Token Type: word             Token: /mounts/u-zon... Usage: arg 2           
+Token Type: wait             Token: &                Usage: wait            
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+[16168] Sent to background
+
+[CS471Program1] psh $ % This is a comment! And 'myserver' has been sent to the background!
+Token Type: comment          Token: % This is a c... Usage: comment         
+
+[CS471Program1] psh $ kill 16168
+Token Type: word             Token: kill             Usage: command         
+Token Type: word             Token: 16168            Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+[16168] Finished
+
+[CS471Program1] psh $ % See? And now it's finished!
+Token Type: comment          Token: % See? And no... Usage: comment         
+
+[CS471Program1] psh $ strings myserver > serverstrings
+Token Type: word             Token: strings          Usage: command         
+Token Type: word             Token: myserver         Usage: arg 1           
+Token Type: redirect stdout  Token: >                Usage: redirect stdout 
+Token Type: word             Token: serverstrings    Usage: filename        
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[CS471Program1] psh $ head serverstrings
+Token Type: word             Token: head             Usage: command         
+Token Type: word             Token: serverstrings    Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+/lib/ld-linux.so.2
+__gmon_start__
+libc.so.6
+_IO_stdin_used
+socket
+strcpy
+exit
+fopen
+gai_strerror
+strrchr
+
+[CS471Program1] psh $ rm serverstrings
+Token Type: word             Token: rm               Usage: command         
+Token Type: word             Token: serverstrings    Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[CS471Program1] psh $ echo $HTML
+Token Type: word             Token: echo             Usage: command         
+Token Type: word             Token: /mounts/u-zon... Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+/mounts/u-zon-d2/ugrad/cdpark4/HTML
+
+[CS471Program1] psh $ setvar $HOME "/mounts/u-zon-d2/ugrad/cdpark4/"
+Token Type: setvar           Token: setvar           Usage: setvar          
+Token Type: variable         Token: $HOME            Usage: variable_name   
+Token Type: string           Token: /mounts/u-zon... Usage: string          
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[CS471Program1] psh $ cd $HOME
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: string           Token: /mounts/u-zon... Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[cdpark4] psh $ cd CS470/pipeshell
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: word             Token: CS470/pipeshell  Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+
+[pipeshell] psh $ exit
+Token Type: exit             Token: exit             Usage: exit            
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+coreopsis:~/CS470/pipeshell> exit
+exit
+
+Script done on Mon 28 Feb 2011 08:16:06 PM EST

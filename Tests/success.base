@@ -1,0 +1,71 @@
+setvar $ShowParseOutput "1"
+setvar $BACK ".."
+Token Type: setvar           Token: setvar           Usage: setvar          
+Token Type: variable         Token: $BACK            Usage: variable_name   
+Token Type: string           Token: ..               Usage: string          
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+cd $BACK
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: string           Token: ..               Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+cd /
+Token Type: cd               Token: cd               Usage: cd              
+Token Type: word             Token: /                Usage: directory_name  
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+pwd
+/
+Token Type: word             Token: pwd              Usage: command         
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+setvar $PF "-c"
+Token Type: setvar           Token: setvar           Usage: setvar          
+Token Type: variable         Token: $PF              Usage: variable_name   
+Token Type: string           Token: -c               Usage: string          
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+python  $PF "print [i for i in range(20) if i % 2]"
+[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+Token Type: word             Token: python           Usage: command         
+Token Type: word             Token: -c               Usage: arg 1           
+Token Type: string           Token: print [i for ... Usage: arg 2           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+echo $PATH
+/bin:/usr/bin:/usr/local/bin:/usr/local/gnu/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/games
+Token Type: word             Token: echo             Usage: command         
+Token Type: word             Token: /bin:/usr/bin... Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+setvar $LEET "Hax"
+Token Type: setvar           Token: setvar           Usage: setvar          
+Token Type: variable         Token: $LEET            Usage: variable_name   
+Token Type: string           Token: Hax              Usage: string          
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+echo $LEET
+Hax
+Token Type: word             Token: echo             Usage: command         
+Token Type: word             Token: Hax              Usage: arg 1           
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+echo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+Token Type: word             Token: echo             Usage: command         
+Token Type: word             Token: 1                Usage: arg 1           
+Token Type: word             Token: 2                Usage: arg 2           
+Token Type: word             Token: 3                Usage: arg 3           
+Token Type: word             Token: 4                Usage: arg 4           
+Token Type: word             Token: 5                Usage: arg 5           
+Token Type: word             Token: 6                Usage: arg 6           
+Token Type: word             Token: 7                Usage: arg 7           
+Token Type: word             Token: 8                Usage: arg 8           
+Token Type: word             Token: 9                Usage: arg 9           
+Token Type: word             Token: 10               Usage: arg 10          
+Token Type: word             Token: 11               Usage: arg 11          
+Token Type: word             Token: 12               Usage: arg 12          
+Token Type: word             Token: 13               Usage: arg 13          
+Token Type: word             Token: 14               Usage: arg 14          
+Token Type: word             Token: 15               Usage: arg 15          
+Token Type: word             Token: 16               Usage: arg 16          
+Token Type: word             Token: 17               Usage: arg 17          
+Token Type: word             Token: 18               Usage: arg 18          
+Token Type: word             Token: 19               Usage: arg 19          
+Token Type: word             Token: 20               Usage: arg 20          
+Token Type: end-of-line      Token: EOL              Usage: EOL             
+exit
+Token Type: exit             Token: exit             Usage: exit            
+Token Type: end-of-line      Token: EOL              Usage: EOL             
