@@ -1,15 +1,12 @@
 # psh - "the pipe shell"
-------------------------
 
 ## Invocation
--------------
     [$ make]
 	$ ./psh
 
 ## Built-in commands
---------------------
 The pipe shell, or `psh`, is a simplified shell for use on UNIX-like systems. The following are built-in commands:
-	
+
 ### exit - Halt the shell
 	psh $ exit
 	psh $ CTRL-D
@@ -23,15 +20,14 @@ The pipe shell, or `psh`, is a simplified shell for use on UNIX-like systems. Th
 	psh $ cd $SOME_DIR_VAR
 
 Note that the pipe shell displays the current leaf directory to the user like so:
-	
+
 	[currentdir] psh $
 
 This has been omitted from the documentation to reduce clutter.
 
 ## User commands
-----------------
 Users may use an absolute path to the command, a path relative to ./ or ../, or a command that can be found by searching through directories in the `$PATH` variable. The default `$PATH` is:
-   
+
     /bin
     /usr/bin
     /usr/local/bin
@@ -52,7 +48,7 @@ Multiple user commands can be chained together using pipes like so:
 In this case, the output of cmd1 would be piped as the input of cmd2, whose output would be piped to cmd3.
 
 `Stdin` and `stdout` can be redirected to other files like so:
-    
+
     psh $ cmd < filein > fileout
 
 Note that one or both can be used, but if both are used, redirecting `stdin` must precede redirecting `stdout`. Filenames can be strings, quoted strings, or variables.
@@ -63,15 +59,13 @@ Finally, commands can be sent to the background by typing an ampersand at the en
     [1354] Sent to background
 
 To summarize:
-    
+
     usage - psh $ cmd [arg]* [| cmd [arg]* ]* [< filein] [> fileout] [&]
 
 ## Pitfalls
------------
 Commands cannot start with shell variables. Shell variables must have whitespace on either side. Each of the built-in commands takes an exact number of arguments - no fewer, no more. Strings packed into shell variables are not unpacked as multiple arguments to commands.
 
 ## Examples
------------
 ### Saving arguments in a variable
 	psh $ setvar $LSFLAGS "-laG"
 	psh $ ls $LSFLAGS
@@ -97,6 +91,5 @@ Commands cannot start with shell variables. Shell variables must have whitespace
 
 
 ## See also
------------
 `DEVNOTES` has information for those interested in the implementation of the pipe shell.
 
