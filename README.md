@@ -1,4 +1,5 @@
 # psh - "the pipe shell"
+------------------------
 
 ## Invocation
     [$ make]
